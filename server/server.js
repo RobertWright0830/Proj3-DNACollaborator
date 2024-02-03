@@ -1,24 +1,46 @@
+const express = require('express'); 
 require('dotenv').config();
+const { ApolloServer } = require('@apollo/server');
+const {expressMiddleware} = require('@apollo/server/express4');
+const path = require('path');
+const { authMiddleware } = require('./utils/auth');
 
-const express = require('express');
+const {typeDefs, resolvers} = require('./schemas');
+const db = require('./config/connection');
 
-
-// Create an express app
+const PORT = process.env.PORT || 3000;
 const app = express();
-
-// Middleware
-app.use((req, res, next) => {
-    console.log(req.path, req.method);
-    next();
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
 });
 
-// Register the routes
-app.get('/', (req, res) => {
-    res.json({mssg: 'Welcome to the DNA Collaborator API'});
-});
+// Create a new instance of an Apollo server with the GraphQL schema
+const startApolloServer = async () => {
+  await server.start();
+  
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
+  
+  app.use('/graphql', expressMiddleware(server, {
+    context: authMiddleware
+  }));
 
-// listen for requests
-app.listen(process.env.PORT, () => {
-    console.log('Server is listening on port', process.env.PORT);
-    }
-);
+  // if we're in production, serve client/dist as static assets
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    });
+  } 
+
+  db.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT} !`);
+      console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+    });
+  });
+}
+
+  startApolloServer();

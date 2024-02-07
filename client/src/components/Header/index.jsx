@@ -47,7 +47,7 @@ const Header = () => {
                 Login
               </Link>
               <Link className="btn btn-lg btn-primary m-2" to="/signup">
-                Signup
+                Sign Up
               </Link>
             </>
           )}

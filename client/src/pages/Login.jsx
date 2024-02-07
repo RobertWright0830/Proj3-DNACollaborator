@@ -41,53 +41,85 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-info"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
+    <section className="bg-dark text-light p-5 text-sm-start">
+      <div className="container">
+        <div className="row mt-5">
+          <div className="col-lg-4 m-auto rounded-top wrapper">
+            <h2 className="text-center pt-3">Login Now</h2>
 
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
+            <div className="card-body">
+              {data ? (
+                <p>
+                  Success! You may now head{" "}
+                  <Link to="/">back to the homepage.</Link>
+                </p>
+              ) : (
+                <form
+                  className="py-3 login-form"
+                  id="form"
+                  onSubmit={handleFormSubmit}
+                >
+                  {/* email field */}
+                  <div className="input-group mb-1">
+                    <span className="input-group-text">
+                      <i className="fas fa-envelope"></i>
+                    </span>
+                    <input
+                      className="form-control"
+                      placeholder="Email"
+                      name="email"
+                      type="email"
+                      required
+                      value={formState.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  {/* password field */}
+                  <div className="input-group mb-3">
+                    <span className="input-group-text">
+                      <i className="fas fa-lock"></i>
+                    </span>
+                    <input
+                      className="form-control"
+                      placeholder="Password"
+                      id="password-login"
+                      name="password"
+                      type="password"
+                      autoComplete="new-password"
+                      required
+                      value={formState.password}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  {/* login button */}
+                  <div className="d-grid">
+                    <button
+                      className="btn btn-primary"
+                      style={{ cursor: "pointer" }}
+                      type="submit"
+                    >
+                      Login
+                    </button>
+                    <p className="text-center mt-4">
+                      Register Now for Free by Clicking
+                      <Link to="/signup"> Signup.</Link>
+                    </p>
+                  </div>
+                </form>
+              )}
+
+              {error && (
+                <div className="my-3 p-3 bg-danger text-white">
+                  {error.message}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 };
 

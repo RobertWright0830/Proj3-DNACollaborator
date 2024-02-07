@@ -1,33 +1,27 @@
-// const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-//  const matchSchema = new Schema(
-//     {
-//         siteName: {
-//             type: String,
-//             required: true,
-//             unique: false
-//         },
-//         testSite: {
-//             type: String,
-//             required: true
-//         },
-//         firstName: {
-//             type: String
-//         },
-//         lastName: {
-//             type: String
-//         },
-//         tester: {
-//             type: Schema.Types.ObjectId,
-//             ref: 'Tester'
-//         },
-//         chromosome: {
-//             type: Schema.Types.ObjectId,
-//             ref: 'Chromosome'
-//         }
-//     }
-// );
+ const matchSchema = new Schema(
+    {
+        matchUsername: {
+            type: String,
+            required: true,
+            unique: false,
+            trim: true
+        }, 
+        matchName: {
+            type: String
+        },   
+        email: {
+            type: String,
+            trim: true,
+            lowercase: true
+        },
+        sex: {
+            type: String
+        }
+    }
+);
 
-// const Match = model('Match', matchSchema);
+const Match = model('Match', matchSchema);
 
-// module.exports = Match;
+module.exports = Match;

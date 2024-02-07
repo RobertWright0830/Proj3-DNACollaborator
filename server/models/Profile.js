@@ -13,6 +13,8 @@ const profileSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      lowercase: true,
       match: [/.+@.+\..+/, "Must match an email address!"],
     },
     password: {
@@ -20,13 +22,7 @@ const profileSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    skills: [
-      {
-        type: String,
-        trim: true,
-      },
-    ],
-  }
+  }, { timestamps: true });
 //   // firstName: {
 //   //   type: String,
 //   // },
@@ -56,7 +52,6 @@ const profileSchema = new Schema(
 //   // signupDate: { type: Date, default: Date.now },
 //   // isLocked: { type: Boolean, default: false },
 //   // { timestamps: true }
-);
 
 // set up pre-save middleware to create password
 profileSchema.pre("save", async function (next) {

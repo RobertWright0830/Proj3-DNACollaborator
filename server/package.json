@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server",
+    "dev": "node server",
     "seed": "node seeders/seed.js"
   },
   "keywords": [],
@@ -14,10 +14,15 @@
   "dependencies": {
     "@apollo/server": "^4.7.1",
     "bcrypt": "^5.0.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "csvtojson": "^2.0.10",
     "express": "^4.17.2",
+    "fs": "^0.0.1-security",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^7.0.2"
+    "mongoose": "^7.0.2",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "dotenv": "^16.4.1",

@@ -21,37 +21,8 @@ const profileSchema = new Schema(
       type: String,
       required: true,
       minlength: 5,
-    },
+    }
   }, { timestamps: true });
-//   // firstName: {
-//   //   type: String,
-//   // },
-//   // lastName: {
-//   //   type: String,
-//   // },
-//   // isSubscribed: {
-//   //   type: Boolean,
-//   //   default: false,
-//   // },
-//   // testers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tester" }],
-//   // status: {
-//   //   type: String,
-//   //   required: true,
-//   //   default: "active",
-//   // },
-//   // failedLoginAttempts: {
-//   //   type: Number,
-//   //   required: true,
-//   //   default: 0,
-//   // },
-//   // lastLogin: { type: Date },
-//   // profilePicUrl: { type: String },
-//   // passwordResetToken: { type: String },
-//   // passwordResetExpires: { type: Date },
-//   // emailVerified: { type: Boolean },
-//   // signupDate: { type: Date, default: Date.now },
-//   // isLocked: { type: Boolean, default: false },
-//   // { timestamps: true }
 
 // set up pre-save middleware to create password
 profileSchema.pre("save", async function (next) {

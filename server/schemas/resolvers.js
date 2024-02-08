@@ -1,4 +1,4 @@
-const { Profile, Ancestor, Match, Segment, Tester } = require("../models");
+const { Profile, Ancestor, ChromosomeSegment } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
@@ -26,30 +26,15 @@ const resolvers = {
       return Ancestor.findById(ancestorId);
     },
 
-    // Match queries
-    matches: async () => {
-      return Match.find();
+    // ChromosomeSegment queries
+    chromosomeSegments: async () => {
+      return ChromosomeSegment.find();
     },
-    match: async (parent, { matchId }) => {
-      return Match.findById(matchId);
-    },
-
-    // Segment queries
-    segments: async () => {
-      return Segment.find();
-    },
-    segment: async (parent, { segmentId }) => {
-      return Segment.findById(segmentId);
-    },
-    
-    // Tester queries
-    testers: async () => {
-      return Tester.find();
-    },
-    tester: async (parent, { testerId }) => {
-      return Tester.findById(testerId);
+    chromosomeSegment: async (parent, { segmentId }) => {
+      return ChromosomeSegment.findById(segmentId);
     },
   },
+
   Mutation: {
     addProfile: async (parent, { name, email, password }) => {
       const profile = await Profile.create({ name, email, password });
@@ -73,75 +58,39 @@ const resolvers = {
       const token = signToken(profile);
       return { token, profile };
     },
-
-    // // Ancestor mutation
-    // addAncestor: async (
-    //   parent,
-    //   {
-    //     wikitreeId,
-    //     firstName,
-    //     lastName,
-    //     birthYear,
-    //     deathYear,
-    //     birthplace,
-    //     deathplace,
-    //   }
-    // ) => {
-    //   return Ancestor.create({
-    //     wikitreeId,
-    //     firstName,
-    //     lastName,
-    //     birthYear,
-    //     deathYear,
-    //     birthplace,
-    //     deathplace,
-    //   });
-    // },
-    // // Match mutation
-    // addMatch: async (parent, { matchUsername, email, matchName, sex }) => {
-    //   return Match.create({ matchUsername, email, matchName, sex });
-    // },
-    // // Segment mutation
-    // addSegment: async (
-    //   parent,
-    //   {
-    //     testerId,
-    //     matchId,
-    //     chromosomeNumber,
-    //     start,
-    //     end,
-    //     segmentCm,
-    //     totalSharedCm,
-    //   }
-    // ) => {
-    //   return Segment.create({
-    //     testerId,
-    //     matchId,
-    //     chromosomeNumber,
-    //     start,
-    //     end,
-    //     segmentCm,
-    //     totalSharedCm,
-    //   });
-    // },
-    // // Tester mutation
-    // addTester: async (
-    //   parent,
-    //   { profileId, siteName, testSite, firstName, lastName }
-    // ) => {
-    //   return Tester.create({
-    //     profileId,
-    //     siteName,
-    //     testSite,
-    //     firstName,
-    //     lastName,
-    //   });
-    // },
-    // Profile removal mutation
+  // Profile removal mutation
     removeProfile: async (parent, { profileId }) => {
       return Profile.findOneAndDelete({ _id: profileId });
     },
-  },
+
+//   // Ancestor removal mutation
+//     removeAncestor: async (parent, { ancestorId }) => {
+//       return Ancestor.findOneAndDelete({ _id: ancestorId });
+//     },
+
+//   // ChromosomeSegment removal mutation
+//     removeChromosomeSegment: async (parent, { segmentId }) => {
+//       return ChromosomeSegment.findOneAndDelete({ _id: segmentId });
+//     },
+
+//   // Ancestor update mutation
+//     updateAncestor: async (parent, { ancestorId, input }) => {
+//       return Ancestor.findOneAndUpdate({ _id: ancestorId }, input, { new: true });
+//     },
+
+//   // ChromosomeSegment update mutation
+//     updateChromosomeSegment: async (parent, { segmentId, input }) => {
+//       return ChromosomeSegment.findOneAndUpdate({ _
+// id: segmentId }, input, { new: true });
+
+// Add ChromosomeSegment mutation
+    addChromosomeSegment: async (parent, { profileId, input }) => {
+      const newSegment = await ChromosomeSegment.create(input);
+
+      return Profile.findOneAndUpdate()
+    }
+  }
+  
 };
 
 module.exports = resolvers;

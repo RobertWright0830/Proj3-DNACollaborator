@@ -1,9 +1,9 @@
 const typeDefs = `
 type Profile {
-  _id: ID
-  name: String
-  email: String
-  password: String
+  _id: ID!
+  name: String!
+  email: String!
+  chromosomeSegments: [ChromosomeSegment!]
 }
 
 type Auth {
@@ -11,56 +11,46 @@ type Auth {
   profile: Profile
 }
 
-type Tester {
-  id: ID!
-  profile: Profile!
-  siteName: String!
-  testSite: String
-  firstName: String
-  lastName: String
-}
-
-type Segment {
-  id: ID!
-  tester: Tester!
-  match: Match!
-  ancestor: Ancestor
-  chromosomeNumber: Int!
+type ChromosomeSegment {
+  _id: ID!
+  profileId: Profile
+  testerId: String!
+  testerName: String
+  matchId: String!
+  matchName: String
+  matchEmail: String
+  matchSex: String
+  field1: String
+  field2: String
+  field3: String
+  field4: String
+  field5: String
+  ancestorWikitreeIds: [String]
+  chromosome: String!
   start: Int!
   end: Int!
   segmentCm: Float
-  totalSharedCm: Float
-}
-
-type Match {
-  id: ID!
-  matchUsername: String!
-  matchName: String
-  email: String
-  sex: String
+  snp: Int
 }
 
 type Ancestor {
-  id: ID!
-  wikitreeId: String
+  _id: ID!
+  ancestorWikitreeId: String
   firstName: String
   lastName: String
-  birthYear: Int
-  deathYear: Int
+  dob: String
+  dod: String
   birthplace: String
   deathplace: String
+  sex: String
 }
 
 # Root type for all queries
 type Query {
   profiles: [Profile]!
   profile(profileId: ID!): Profile
-  testers: [Tester]!
-  tester(testerId: ID!): Tester
-  segments: [Segment]!
-  segment(segmentId: ID!): Segment
-  matches: [Match]!
-  match(matchId: ID!): Match
+  chromosomeSegments: [ChromosomeSegment]!
+  chromosomeSegment(segmentId: ID!): ChromosomeSegment
   ancestors: [Ancestor]!
   ancestor(ancestorId: ID!): Ancestor
 }
@@ -70,6 +60,8 @@ type Mutation {
   addProfile(name: String!, email: String!, password: String!): Auth
   login(email: String!, password: String!): Auth
   removeProfile(profileId: ID!): Profile
+  addChromosomeSegment(profileId: ID!, testerId: String!, matchId: String!, matchName: String, matchEmail: String, matchSex: String, chromosome: String!, start: Int!, end: Int!, segmentCm: Float, snp: Int): ChromosomeSegment
+  linkAncestorToSegment(segmentId: ID!, ancestorId: ID!): ChromosomeSegment
 }
 `;
 

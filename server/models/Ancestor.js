@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const ancestorSchema = new Schema(
   {
-    wikitreeId: {
+    ancestorWikitreeId: {
       type: String,
       required: false,
       unique: true,
@@ -14,16 +14,19 @@ const ancestorSchema = new Schema(
     lastName: {
       type: String,
     },
-    birthYear: {
-      type: Number,
-    },
-    deathYear: {
-      type: Number,
-    },
-    birthplace: {
+    dob: {
       type: String,
     },
-    deathplace: {
+    dod: {
+      type: String,
+    },
+    birthPlace: {
+      type: String,
+    },
+    deathPlace: {
+      type: String,
+    },
+    sex: {
       type: String,
     },
   },

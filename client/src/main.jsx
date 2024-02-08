@@ -1,6 +1,11 @@
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom/dist'
-import './index.css'
+console.log("App initialization - main.jsx");
+console.log("API URL:", import.meta.env.VITE_APP_API_URL);
+console.log("API URL:", import.meta.env.VITE_APP_UPLOAD_URL);
+console.log("API URL:", import.meta.env.VITE_GRAPHQL_API_URL);
+
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom/dist";
+import "./index.css";
 
 import App from "./App.jsx";
 import Home from "./pages/Home";
@@ -10,41 +15,40 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 // import Upload from "./pages/Upload";
 
-
 const router = createBrowserRouter([
-  { 
-    path: '/', 
+  {
+    path: "/",
     element: <App />,
     error: <Error />,
     children: [
-      { 
+      {
         index: true,
-      element: <Home />
+        element: <Home />,
       },
-      { 
-        path: '/login',
-        element: <Login />
+      {
+        path: "/login",
+        element: <Login />,
       },
-      { 
-        path: '/signup',
-        element: <Signup />
+      {
+        path: "/signup",
+        element: <Signup />,
       },
-      { 
-        path: '/me',
-        element: <Dashboard />
+      {
+        path: "/me",
+        element: <Dashboard />,
       },
       // {
       //   path: '/upload',
       //   element: <Upload />
       // },
       {
-        path: '/profiles/:profileId',
-        element: <Dashboard />
+        path: "/profiles/:profileId",
+        element: <Dashboard />,
       },
-    ]
-  }
- ])
+    ],
+  },
+]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
-)
+);

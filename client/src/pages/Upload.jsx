@@ -6,11 +6,13 @@ function Upload() {
 
   // Fetch data on component mount
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_APP_API_URL}`)
+    
+    // fetch(`${import.meta.env.VITE_APP_API_URL}`)
+    fetch(`http://localhost:3000`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setItems(data.items); // Assuming your API returns an object with an 'items' property
+        setItems(data.items); //
       })
       .catch((e) => console.log(e));
   }, []); // Empty dependency array means this effect runs once on mount
@@ -23,30 +25,34 @@ function Upload() {
     var formData = new FormData();
     formData.append("file", input.files[0]);
 
-    fetch(`${import.meta.env.VITE_APP_UPLOAD_URL}`, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            `Network response was not ok: ${response.statusText}`
-          );
-        }
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.indexOf("application/json") !== -1) {
-          return response.json();
-        } else {
-          throw new Error("Received non-JSON response from server");
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        alert("CSV uploaded successfully");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    // fetch(`${import.meta.env.VITE_APP_UPLOAD_URL}`, {
+          fetch(`http://localhost:3001/upload`, {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  `Network response was not ok: ${response.statusText}`
+                );
+              }
+              const contentType = response.headers.get("content-type");
+              if (
+                contentType &&
+                contentType.indexOf("application/json") !== -1
+              ) {
+                return response.json();
+              } else {
+                throw new Error("Received non-JSON response from server");
+              }
+            })
+            .then((data) => {
+              console.log(data);
+              alert("CSV uploaded successfully");
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
   };
 
   return (

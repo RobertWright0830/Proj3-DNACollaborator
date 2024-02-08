@@ -6,7 +6,7 @@ function Upload() {
 
   // Fetch data on component mount
   useEffect(() => {
-    fetch(`http://localhost:3000`)
+    fetch(`${import.meta.env.VITE_APP_API_URL}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -23,7 +23,7 @@ function Upload() {
     var formData = new FormData();
     formData.append("file", input.files[0]);
 
-    fetch("http://localhost:3001/upload", {
+    fetch(`${import.meta.env.VITE_APP_UPLOAD_URL}`, {
       method: "POST",
       body: formData,
     })

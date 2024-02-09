@@ -10,8 +10,10 @@ import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
+const GRAPHQL_API_URL = import.meta.env.VITE_GRAPHQL_API_URL;
+
 const httpLink = createHttpLink({
-  uri: import.meta.env.VITE_GRAPHQL_API_URL,
+  uri: GRAPHQL_API_URL,
 });
 
 const authLink = setContext((_, { headers }) => {

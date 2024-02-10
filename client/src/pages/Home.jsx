@@ -17,7 +17,8 @@ const Home = () => {
                   style={{ width: "15%", height: "auto" }}
                 />
                 <span className="text-warning">DNA</span>
-                <h1 className="company-name">Collaborator</h1>
+                <p></p>
+                Collaborator
               </h1>
 
               <h2 className="slogan">

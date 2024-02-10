@@ -25,7 +25,7 @@ type ChromosomeSegment {
   field3: String
   field4: String
   field5: String
-  ancestorWikitreeIds: [String]
+  wikitreeId: [String]
   chromosome: String!
   start: Int!
   end: Int!
@@ -35,14 +35,14 @@ type ChromosomeSegment {
 
 type Ancestor {
   _id: ID!
-  ancestorWikitreeId: String
-  firstName: String
-  lastName: String
-  dob: String
-  dod: String
-  birthplace: String
-  deathplace: String
+  wikitreeId: String
+  birthName: String
+  birthDate: String
+  deathDate: String
+  birthLocation: String
+  deathLocation: String
   sex: String
+  wikitreePicUrl: String
 }
 
 # Root type for all queries

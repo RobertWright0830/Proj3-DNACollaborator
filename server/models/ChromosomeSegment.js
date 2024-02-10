@@ -1,5 +1,3 @@
-console.log("Entering ChromosomeSegment model definition");
-
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -60,7 +58,7 @@ const chromosomeSegmentSchema = new Schema(
       type: String,
       required: false,
     },
-    ancestorWikitreeIds: [
+    wikitreeIds: [
       {
         type: String,
         required: false,
@@ -93,7 +91,5 @@ const chromosomeSegmentSchema = new Schema(
 const ChromosomeSegment =
   mongoose.models.ChromosomeSegment ||
   mongoose.model("ChromosomeSegment", chromosomeSegmentSchema);
-
-console.log("ChromosomeSegment model defined");
 
 module.exports = ChromosomeSegment;

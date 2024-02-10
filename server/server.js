@@ -33,14 +33,14 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   //upload code that I comment out, but uncomment to load data starts here
-  app.get("/", async (req, res) => {
-    try {
-      const data = await chromosomeSegment.find({});
-      res.json(data);
-    } catch (err) {
-      res.status(500).send({ message: "Error fetching data", error: err });
-    }
-  });
+  // app.get("/", async (req, res) => {
+  //   try {
+  //     const data = await chromosomeSegment.find({});
+  //     res.json(data);
+  //   } catch (err) {
+  //     res.status(500).send({ message: "Error fetching data", error: err });
+  //   }
+  // });
 
   app.post("/upload", upload.single("file"), async (req, res) => {
     try {

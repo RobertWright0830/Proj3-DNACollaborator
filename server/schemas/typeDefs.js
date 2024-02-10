@@ -3,7 +3,6 @@ type Profile {
   _id: ID!
   name: String!
   email: String!
-  chromosomeSegments: [ChromosomeSegment!]
 }
 
 type Auth {
@@ -11,26 +10,25 @@ type Auth {
   profile: Profile
 }
 
-type ChromosomeSegment {
+type Segment {
   _id: ID!
-  profileId: Profile
   testerId: String!
   testerName: String
   matchId: String!
   matchName: String
   matchEmail: String
-  matchSex: String
+  sex: String
   field1: String
   field2: String
   field3: String
   field4: String
   field5: String
-  wikitreeId: [String]
   chromosome: String!
   start: Int!
   end: Int!
   segmentCm: Float
   snp: Int
+  wikitreeIds: [String]
 }
 
 type Ancestor {
@@ -49,8 +47,9 @@ type Ancestor {
 type Query {
   profiles: [Profile]!
   profile(profileId: ID!): Profile
-  chromosomeSegments: [ChromosomeSegment]!
-  chromosomeSegment(segmentId: ID!): ChromosomeSegment
+  segments: [Segment]!
+  segment(segmentId: ID!): Segment
+  segmentsByWikitreeId(wikitreeId: String!): [Segment]
   ancestors: [Ancestor]!
   ancestor(ancestorId: ID!): Ancestor
 }
@@ -60,8 +59,8 @@ type Mutation {
   addProfile(name: String!, email: String!, password: String!): Auth
   login(email: String!, password: String!): Auth
   removeProfile(profileId: ID!): Profile
-  addChromosomeSegment(profileId: ID!, testerId: String!, matchId: String!, matchName: String, matchEmail: String, matchSex: String, chromosome: String!, start: Int!, end: Int!, segmentCm: Float, snp: Int): ChromosomeSegment
-  linkAncestorToSegment(segmentId: ID!, ancestorId: ID!): ChromosomeSegment
+  addSegment(profileId: ID!, testerId: String!, matchId: String!, matchName: String, matchEmail: String, matchSex: String, chromosome: String!, start: Int!, end: Int!, segmentCm: Float, snp: Int): Segment
+  linkAncestorToSegment(segmentId: ID!, ancestorId: ID!): Segment
 }
 `;
 

@@ -10,7 +10,7 @@ const { ApolloServer } = require('@apollo/server');  //x
 const {expressMiddleware} = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-const chromosomeSegment = require('./models/ChromosomeSegment');
+const segment = require('./models/Segment');
 const upload = multer({ dest: 'uploads/' });
 
 
@@ -32,16 +32,6 @@ const startApolloServer = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  //upload code that I comment out, but uncomment to load data starts here
-  // app.get("/", async (req, res) => {
-  //   try {
-  //     const data = await chromosomeSegment.find({});
-  //     res.json(data);
-  //   } catch (err) {
-  //     res.status(500).send({ message: "Error fetching data", error: err });
-  //   }
-  // });
-
   app.post("/upload", upload.single("file"), async (req, res) => {
     try {
       console.log("Received file:", req.file.path);
@@ -54,7 +44,7 @@ const startApolloServer = async () => {
         chromosome: item["chr"],
         start: parseInt(item["B37Start"], 10),
         end: parseInt(item["B37End"], 10),
-        segmentCM: parseFloat(item["Segment cM"]),
+        segmentCm: parseFloat(item["Segment cM"]),
         snp: parseInt(item["SNPs"], 10),
         matchName: item["MatchedName"],
         sex: item["Matched Sex"],
@@ -62,7 +52,7 @@ const startApolloServer = async () => {
       }));
       console.log("Mapped data for MongoDB:", chromosomeInfo);
 
-      await chromosomeSegment.insertMany(chromosomeInfo);
+      await segment.insertMany(chromosomeInfo);
       console.log("Data inserted into MongoDB");
 
       res.status(200).send({
@@ -81,8 +71,6 @@ const startApolloServer = async () => {
       });
     }
   });
-
-  //upload code that I comment out, but uncomment to load data ends here
   
   app.use(
     "/graphql",

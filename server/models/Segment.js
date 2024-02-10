@@ -2,13 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const chromosomeSegmentSchema = new Schema(
+const segmentSchema = new Schema(
   {
-    profileId: {
-      type: Schema.Types.ObjectId,
-      ref: "Profile",
-      required: false,
-    },
     testerId: {
       type: String,
       required: true,
@@ -88,8 +83,8 @@ const chromosomeSegmentSchema = new Schema(
   { timestamps: true }
 );
 
-const ChromosomeSegment =
-  mongoose.models.ChromosomeSegment ||
-  mongoose.model("ChromosomeSegment", chromosomeSegmentSchema);
+const Segment =
+  mongoose.models.Segment ||
+  mongoose.model("Segment", segmentSchema);
 
-module.exports = ChromosomeSegment;
+module.exports = Segment;

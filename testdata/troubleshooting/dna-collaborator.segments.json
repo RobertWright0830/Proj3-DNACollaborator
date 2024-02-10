@@ -1,0 +1,76 @@
+[{
+  "_id": {
+    "$oid": "65c7acc347305079ccc62736"
+  },
+  "testerId": "BY7009774",
+  "matchId": "M193304",
+  "matchName": "Richard Sharpe",
+  "matchEmail": "shadowfox@blomand.net",
+  "sex": "M",
+  "ancestorIds": [
+    "65c7ad29ab7960f6c27383c4"
+  ],
+  "chromosome": "1",
+  "start": 3275149,
+  "end": 10597024,
+  "segmentCm": 14.6,
+  "snp": 1057,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2024-02-10T17:05:07.730Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-10T17:05:07.730Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c7acc347305079ccc62737"
+  },
+  "testerId": "BY7009774",
+  "matchId": "JN8801410",
+  "matchName": "Ryan Koch",
+  "matchEmail": "ryan.koch@gmail.com",
+  "sex": "M",
+  "ancestorIds": [
+    "65c7ad4cab7960f6c27383c5"
+  ],
+  "chromosome": "1",
+  "start": 3632608,
+  "end": 6863342,
+  "segmentCm": 7.7,
+  "snp": 268,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2024-02-10T17:05:07.730Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-10T17:05:07.730Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c7acc347305079ccc62738"
+  },
+  "testerId": "BY7009774",
+  "matchId": "A461399",
+  "matchName": "*Katie Lorraine Anderson",
+  "matchEmail": "amrezo@hotmail.com",
+  "sex": "F",
+  "ancestorIds": [
+    "65c7ad29ab7960f6c27383c4",
+    "65c7ad4cab7960f6c27383c5"
+  ],
+  "chromosome": "1",
+  "start": 6199900,
+  "end": 13176463,
+  "segmentCm": 13.5,
+  "snp": 1633,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2024-02-10T17:05:07.730Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-10T17:05:07.730Z"
+  }
+}]

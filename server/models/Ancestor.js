@@ -29,8 +29,10 @@ const ancestorSchema = new Schema(
     wikitreePicUrl: {
       type: String,
     },
-  },
-  { timestamps: true }
+    },
+  {
+    timestamps: true,
+  }
 );
 
 const Ancestor = model("Ancestor", ancestorSchema);

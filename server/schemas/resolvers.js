@@ -19,15 +19,15 @@ const resolvers = {
 
     // Ancestor queries
     ancestors: async () => {
-      return await Ancestor.find({}).populate("segments");
+      return await Ancestor.find({});
     },
     ancestor: async (parent, { ancestorId }) => {
-      return Ancestor.findById(ancestorId).populate("segments");
+      return Ancestor.findById(ancestorId);
     },
 
     // Segment queries
     segments: async () => {
-      return Segment.find({}).populate("ancestorIds");
+      return Segment.find({});
     },
     segment: async (parent, { segmentId }) => {
       return Segment.findById(segmentId);
@@ -47,12 +47,15 @@ const resolvers = {
   },
 
   Mutation: {
+    // Profile mutations
+    // Profile add
     addProfile: async (parent, { name, email, password }) => {
       const profile = await Profile.create({ name, email, password });
       const token = signToken(profile);
 
       return { token, profile };
     },
+    // Profile login
     login: async (parent, { email, password }) => {
       const profile = await Profile.findOne({ email });
 
@@ -69,36 +72,133 @@ const resolvers = {
       const token = signToken(profile);
       return { token, profile };
     },
-    // Profile removal mutation
+    // Update profile
+    updateProfile: async (parent, { profileId, input }) => {
+      return Profile.findOneAndUpdate({ _id: profileId }, input, { new: true });
+    },
+    // Profile remove
     removeProfile: async (parent, { profileId }) => {
       return Profile.findOneAndDelete({ _id: profileId });
     },
+    // Ancestor mutations
+    // Ancestor add
+    addAncestor: async (
+      parent,
+      {
+        wikitreeId,
+        birthName,
+        birthDate,
+        deathDate,
+        birthLocation,
+        deathLocation,
+        sex,
+        wikitreePicUrl,
+      }
+    ) => {
+      const newAncestor = await Ancestor.create({
+        wikitreeId,
+        birthName,
+        birthDate,
+        deathDate,
+        birthLocation,
+        deathLocation,
+        sex,
+        wikitreePicUrl,
+      });
+      return newAncestor;
+    },
 
-    //   // Ancestor removal mutation
-    //     removeAncestor: async (parent, { ancestorId }) => {
-    //       return Ancestor.findOneAndDelete({ _id: ancestorId });
-    //     },
+    // Ancestor update
+    updateAncestor: async (parent, args) => {
+      const {
+        ancestorId,
+        wikitreeId,
+        birthName,
+        birthDate,
+        deathDate,
+        birthLocation,
+        deathLocation,
+        sex,
+        wikitreePicUrl,
+      } = args;
+      return Ancestor.findOneAndUpdate(
+        { _id: ancestorId },
+        {
+          $set: {
+            wikitreeId,
+            birthName,
+            birthDate,
+            deathDate,
+            birthLocation,
+            deathLocation,
+            sex,
+            wikitreePicUrl,
+          },
+        },
+        { new: true }
+      );
+    },
+    // Ancestor remove
+    removeAncestor: async (parent, { ancestorId }) => {
+      return Ancestor.findOneAndDelete({ _id: ancestorId });
+    },
 
-    //   // Segment removal mutation
-    //     removeSegment: async (parent, { segmentId }) => {
-    //       return Segment.findOneAndDelete({ _id: segmentId });
-    //     },
+    // Segment mutations
+    // Segment add
+    addSegment: async (
+      parent,
+      { testerId, matchId, chromosome, start, end /* other fields */ }
+    ) => {
+      const newSegment = await Segment.create({
+        testerId,
+        matchId,
+        chromosome,
+        start,
+        end,
+        // include other fields as needed
+      });
+      return newSegment;
+    },
 
-    //   // Ancestor update mutation
-    //     updateAncestor: async (parent, { ancestorId, input }) => {
-    //       return Ancestor.findOneAndUpdate({ _id: ancestorId }, input, { new: true });
-    //     },
-
-    //   // Segment update mutation
-    //     updateSegment: async (parent, { segmentId, input }) => {
-    //       return Segment.findOneAndUpdate({ _
-    // id: segmentId }, input, { new: true });
-
-    // Add Segment mutation
-    addSegment: async (parent, { profileId, input }) => {
-      const newSegment = await Segment.create(input);
-
-      return Profile.findOneAndUpdate();
+    // Segment update mutation
+    updateSegment: async (parent, args) => {
+      const {
+        segmentId,
+        testerId,
+        matchId,
+        matchName,
+        matchEmail,
+        sex,
+        chromosome,
+        start,
+        end,
+        segmentCm,
+        snp,
+      } = args;
+      return Segment.findOneAndUpdate(
+        { _id: segmentId }, 
+        {
+          $set: {
+            testerId,
+            matchId,
+            matchName,
+            matchEmail,
+            sex,
+            chromosome,
+            start,
+            end,
+            segmentCm,
+            snp,
+          },
+        },
+        { new: true }
+      );
+    },
+  
+    
+    // Segment removal mutation
+    removeSegment: async (parent, { segmentId }) => {
+      return Segment.findOneAndDelete({ _id: segmentId });
     },
   },
 };

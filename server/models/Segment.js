@@ -21,7 +21,7 @@ const segmentSchema = new Schema(
     },
     matchName: {
       type: String,
-      required: true,
+      required: false,
     },
     matchEmail: {
       type: String,

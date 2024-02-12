@@ -1,0 +1,77 @@
+input {
+  padding: 2px 10px;
+  margin: 4px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  accent-color: #ffc107;
+}
+
+table {
+  font-size: 14px;
+  margin-top: 10px;
+  border-collapse: collapse;
+  width: 90%;
+  border-radius: 5px;
+}
+
+table td, table th {
+color: black;
+font-weight: bold;
+ padding: 8px;
+ text-align: center;
+}
+
+table tr:nth-child(even){background-color: darkgray;}
+table tr:nth-child(odd){background-color: grey;}
+
+table tr:hover {
+  background-color: #ffc107;
+
+}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: black;
+  color: #ffc107;
+}
+
+.arrow-up {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  /* margin-left: 5px; */
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid  #ffc107;
+}
+
+.arrow-down {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  /* margin-left: 5px; */
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid  #ffc107;
+}
+
+select, strong, .btn-enabled {
+  color: black;
+  background-color: darkgrey; 
+  border: 1px solid #adadad;
+}
+
+.btn-disabled {
+  color: grey;
+  background-color: lightgrey;
+  border: 1px solid #dcdcdc;
+  cursor: not-allowed;
+}
+
+.btn-enabled:hover {
+  background-color: #dcdcdc;
+}
+
+

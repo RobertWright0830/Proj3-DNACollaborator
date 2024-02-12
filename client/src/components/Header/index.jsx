@@ -30,6 +30,11 @@ const Header = () => {
                 Contact Us
               </a>
             </li>
+            <li>
+              <Link to="/analysis" className="nav-link">
+                Analyze
+              </Link>
+            </li>
             {Auth.loggedIn() ? (
               <button className="btn btn-lg btn-light m-2" onClick={logout}>
                 Logout

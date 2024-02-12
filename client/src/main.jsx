@@ -13,7 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
-import Upload from "./pages/Upload";
+import Analysis from "./pages/Analysis";
 
 const router = createBrowserRouter([
   {
@@ -38,12 +38,12 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: '/upload',
-        element: <Upload />
-      },
-      {
         path: "/profiles/:profileId",
         element: <Dashboard />,
+      },
+      {
+        path: "/analysis",
+        element: <Analysis />,
       },
     ],
   },

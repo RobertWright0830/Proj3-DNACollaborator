@@ -13,6 +13,7 @@ import { COLUMNS } from "./columns";
 import "./table.css";
 import { GlobalFilter } from "./GlobalFilter";
 import { ColumnFilter } from "./ColumnFilter";
+import Spinner from "../Spinner/index";
 
 const GET_SEGMENTS = gql`
   query GetSegments {
@@ -106,7 +107,7 @@ const CurrentTable = () => {
 
     const { pageIndex, pageSize, globalFilter } = state;
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner />;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

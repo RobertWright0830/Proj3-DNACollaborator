@@ -51,7 +51,7 @@ function Upload() {
       .then((data) => {
         console.log("Upload successful, server response:", data);
         console.log(data);
-        setUploadSuccess("CSV uploaded successfully");
+        setUploadSuccess("CSV uploaded successfully; please refresh the page to see the updated data.");
         inputRef.current.value = null;
       })
       .catch((error) => {

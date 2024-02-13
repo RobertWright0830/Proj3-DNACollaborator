@@ -18,7 +18,7 @@ const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 
 const PORT = process.env.PORT;
-const YOUR_DOMAIN = "http://localhost:4242";
+const YOUR_DOMAIN = process.env.YOUR_DOMAIN;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
@@ -100,7 +100,7 @@ app.use(cors(corsOptions));
         },
       ],
       mode: "payment",
-       success_url: `${YOUR_DOMAIN}?success=true`,
+    success_url: `${YOUR_DOMAIN}?success=true`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
       automatic_tax: {
         enabled: true,

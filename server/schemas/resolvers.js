@@ -147,6 +147,14 @@ const resolvers = {
     // Add ancestor by wikitreeId
     addAncestorByWikitreeId: async (_, { wikitreeId }) => {
       try {
+        const existingAncestor = await Ancestor.findOne({
+          wikitreeId: wikitreeId,
+        });
+        if (existingAncestor) {
+          console.log("Ancestor already exists in database:", existingAncestor);
+          return existingAncestor;
+        }
+
         const response = await axios.get(
           `https://api.wikitree.com/api.php?action=getProfile&key=${wikitreeId}&fields=Name,FirstName,MiddleName,LastNameAtBirth,BirthDate,DeathDate,BirthLocation,DeathLocation,Gender,Photo`
         );
@@ -154,17 +162,24 @@ const resolvers = {
         const ancestorData = response.data[0].profile;
 
         console.log("Ancestor Data:", ancestorData); // Log the data from the response
+
+        // Determine the default image based on gender
+        const defaultImageUrl =
+          ancestorData.Gender === "Female"
+            ? "/images/icons/female.gif.pagespeed.ce._HpxLyYvZO.gif"
+            : "/images/icons/male.gif.pagespeed.ce.sk2cBn-ts3.gif";
+
         const newAncestor = new Ancestor({
           wikitreeId: ancestorData.Name,
-          firstName: ancestorData.FirstName,
-          middleName: ancestorData.MiddleName,
-          lastNameAtBirth: ancestorData.LastNameAtBirth,
-          birthDate: ancestorData.BirthDate,
-          deathDate: ancestorData.DeathDate,
-          birthLocation: ancestorData.BirthLocation,
-          deathLocation: ancestorData.DeathLocation,
-          sex: ancestorData.Gender,
-          wikitreePicUrl: ancestorData.Photo,
+          firstName: ancestorData.FirstName || "",
+          middleName: ancestorData.MiddleName || "",
+          lastNameAtBirth: ancestorData.LastNameAtBirth || "",
+          birthDate: ancestorData.BirthDate || "",
+          deathDate: ancestorData.DeathDate || "",
+          birthLocation: ancestorData.BirthLocation || "",
+          deathLocation: ancestorData.DeathLocation || "",
+          sex: ancestorData.Gender || "",
+          wikitreePicUrl: ancestorData.PhotoData?.path ?? defaultImageUrl,
         });
 
         console.log("New Ancestor:", newAncestor); // Log the new ancestor object
@@ -172,14 +187,11 @@ const resolvers = {
         const savedAncestor = await newAncestor.save(); // Save the new ancestor to the database
         console.log("Saved Ancestor:", savedAncestor); // Log the saved ancestor
         return savedAncestor;
-      }
-      catch (error) {
+      } catch (error) {
         console.error(error);
         throw new Error("Ancestor not found");
       }
     },
-     
-
 
     // Segment mutations
     // Segment add
@@ -214,7 +226,7 @@ const resolvers = {
         snp,
       } = args;
       return Segment.findOneAndUpdate(
-        { _id: segmentId }, 
+        { _id: segmentId },
         {
           $set: {
             testerId,
@@ -232,8 +244,7 @@ const resolvers = {
         { new: true }
       );
     },
-  
-    
+
     // Segment removal mutation
     removeSegment: async (parent, { segmentId }) => {
       return Segment.findOneAndDelete({ _id: segmentId });

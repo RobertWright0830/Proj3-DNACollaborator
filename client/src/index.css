@@ -76,6 +76,12 @@ small.error{
     padding-right: 10%;
 }
 
+.custom-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px white;
+    border: .5px solid white;
+}
+
 .nav-item {
     padding-right: 20px;
 }

@@ -23,3 +23,21 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const ADD_ANCESTOR_BY_WIKITREE_ID = gql`
+  mutation AddAncestorByWikitreeId($wikitreeId: String!) {
+    addAncestorByWikitreeId(wikitreeId: $wikitreeId) {
+      _id
+      wikitreeId
+      firstName
+      middleName
+      lastNameAtBirth
+      birthDate
+      deathDate
+      birthLocation
+      deathLocation
+      sex
+      wikitreePicUrl
+    }
+  }
+`;

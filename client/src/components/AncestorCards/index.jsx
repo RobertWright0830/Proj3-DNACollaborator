@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_ANCESTOR_BY_WIKITREE_ID } from "../../utils/mutations";
+import { ADD_ANCESTOR_BY_WIKITREE_ID, ADD_WIKITREEID_TO_SEGMENT, REMOVE_WIKITREEID_FROM_SEGMENT } from "../../utils/mutations";
 import Spinner from "../Spinner/index";
 
-const WikiTreeAncestor = () => {
+const AncestorCards = ({selectedSegments}) => {
   const [wikitreeId, setWikitreeId] = useState("");
   const [addAncestor, { data, loading, error }] = useMutation(
     ADD_ANCESTOR_BY_WIKITREE_ID
   );
+  const [addWikiTreeIdToSegment] = useMutation(ADD_WIKITREEID_TO_SEGMENT);
+  const [removeWikiTreeIdFromSegment] = useMutation(REMOVE_WIKITREEID_FROM_SEGMENT);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +18,59 @@ const WikiTreeAncestor = () => {
     } catch (err) {
       console.error("Error adding ancestor:", err);
     }
+  };
+
+  // Placeholder functions for button actions.
+  const handleAddToSegment = async () => {
+    console.log("Selected segments:", selectedSegments);
+    selectedSegments.forEach(async (segment) => {
+      console.log("Current segment._id:", segment._id);
+      console.log("Selected segments:", selectedSegments);
+      if (!segment.wikitreeIds.includes(wikitreeId)) {
+        // Check if wikitreeId is not already in the segment
+        try {
+          await addWikiTreeIdToSegment({
+            variables: {
+              segmentId: segment._id,
+              wikitreeId,
+            },
+          });
+          console.log("wikitreeId added to segment:", segment._id);
+        } catch (err) {
+          console.error(
+            `Error adding wikitreeId to segment ${segment._id}:`,
+            err
+          );
+        }
+      }
+    });
+  };
+
+  const handleRemoveFromSegment = async () => {
+    selectedSegments.forEach(async (segment) => {
+      if (segment.wikitreeIds.includes(wikitreeId)) {
+        // Check if wikitreeId is in the segment
+        try {
+          await removeWikiTreeIdFromSegment({
+            variables: {
+              segmentId: segment._id,
+              wikitreeId,
+            },
+          });
+          console.log("wikitreeId removed from segment:", segment._id);
+        } catch (err) {
+          console.error(
+            `Error removing wikitreeId from segment ${segment._id}:`,
+            err
+          );
+        }
+      }
+    }
+    );
+  };
+
+  const handleRefresh = async () => {
+    // Implement logic for refreshing from wikitree/re-fetching data and updating
   };
 
   return (
@@ -61,8 +116,19 @@ const WikiTreeAncestor = () => {
           </div>
         )}
       </div>
+      <div className="card-actions">
+        <button className="custom-btn-add" onClick={handleAddToSegment}>
+          Add
+        </button>
+        <button className="custom-btn-remove" onClick={handleRemoveFromSegment}>
+          Remove
+        </button>
+        <button className="custom-btn-refresh" onClick={handleRefresh}>
+          Refresh
+        </button>
+      </div>
     </div>
   );
 };
 
-export default WikiTreeAncestor;
+export default AncestorCards;

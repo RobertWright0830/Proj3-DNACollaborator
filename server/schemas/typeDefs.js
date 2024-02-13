@@ -79,6 +79,10 @@ type Mutation {
     #Ancestor remove
   removeAncestor(ancestorId: ID!): Ancestor
   addAncestorByWikitreeId(wikitreeId: String!): Ancestor
+    #add WikiTreeId To Segment
+  addWikiTreeIdToSegment(segmentId: ID!, wikitreeId: String!): Segment
+    #remove WikiTreeId from Segment
+  removeWikiTreeIdFromSegment(segmentId: ID!, wikitreeId: String!): Segment
 
   #Segment mutations
     #Segment add

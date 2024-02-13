@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import {
   useTable,
   useSortBy,
@@ -18,6 +18,7 @@ import Spinner from "../Spinner/index";
 const GET_SEGMENTS = gql`
   query GetSegments {
       segments {
+      _id
       testerId
       matchId
       matchName
@@ -32,7 +33,7 @@ const GET_SEGMENTS = gql`
   }
 `;
 
-const CurrentTable = () => {
+const CurrentTable = ({ onSelectionChange }) => {
   const columns = useMemo(() => COLUMNS, []);
   const { loading, error, data } = useQuery(GET_SEGMENTS);
   const tableData = useMemo(
@@ -104,6 +105,12 @@ const CurrentTable = () => {
       });
     }
   );
+
+  useEffect(() => {
+    if (onSelectionChange) {
+    onSelectionChange(selectedFlatRows.map((d) => d.original));
+    }
+  }, [selectedFlatRows, onSelectionChange]);
 
     const { pageIndex, pageSize, globalFilter } = state;
 
@@ -199,7 +206,7 @@ const CurrentTable = () => {
           Next
         </button>
       </div>
-      <pre>
+      {/* <pre>
         <code>
           {JSON.stringify(
             {
@@ -209,7 +216,7 @@ const CurrentTable = () => {
             2
           )}
         </code>
-      </pre>
+      </pre> */}
     </>
   );
 };

@@ -17,6 +17,42 @@
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
 }
 
+.custom-btn-add {
+  color: #fff;
+  background-color: green;
+  border-color: green;
+  border-radius: 0.25rem;
+}
+.custom-btn-add:hover {
+  color: #fff;
+  background-color: lightgreen;
+  border-color: lightgreen;
+}
+
+.custom-btn-remove {
+  color: #fff;
+  background-color: red;
+  border-color: red;
+  border-radius: 0.25rem;
+}
+.custom-btn-remove:hover {
+  color: #fff;
+  background-color: lightcoral;
+  border-color: lightcoral;
+}
+
+.custom-btn-refresh {
+  color: #fff;
+  background-color: gray;
+  border-color: gray;
+  border-radius: 0.25rem;
+}
+.custom-btn-refresh:hover {
+  color: #fff;
+  background-color: lightgrey;
+  border-color: lightgrey;
+}
+
 i {
     background-color: white;
     color: rgb(33, 37, 41);

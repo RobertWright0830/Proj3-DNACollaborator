@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_SINGLE_PROFILE, QUERY_ME } from '../utils/queries';
@@ -17,6 +18,8 @@ const Dashboard = () => {
       variables: { profileId },
     }
   );
+
+  const [selectedSegments, setSelectedSegments] = useState([]);
 
   // Additional logging
   console.log("loading:", loading); // Log the loading state
@@ -53,13 +56,13 @@ const Dashboard = () => {
         className="cards-container"
         style={{ display: "flex", justifyContent: "space-around" }}
       >
-        <AncestorCards cardId="1" />
-        <AncestorCards cardId="2" />
+        <AncestorCards selectedSegments={selectedSegments} cardId="1" />
+        <AncestorCards selectedSegments={selectedSegments} cardId="2" />
       </div>
       <Upload />
       <h3>Chromosome Segment Table</h3>
       <p>Sort in ascending or descending order by selecting the header.</p>
-      <CurrentTable />
+      <CurrentTable onSelectionChange={setSelectedSegments} />
     </div>
   );
 };

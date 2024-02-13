@@ -15,6 +15,8 @@ export const customNumberFilter = (rows, id, filterValue) => {
 };
 
 export const COLUMNS = [
+
+  
   {
     Header: "Tester ID",
     accessor: "testerId",
@@ -30,7 +32,7 @@ export const COLUMNS = [
   },
   {
     Header: "WikiTree ID",
-    accessor: "wikiTreeIds",
+    accessor: "wikitreeIds",
   },
   {
     Header: "Chrom",

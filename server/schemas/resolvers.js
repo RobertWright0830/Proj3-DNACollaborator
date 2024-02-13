@@ -193,6 +193,33 @@ const resolvers = {
       }
     },
 
+    // Add WikiTreeId To Segment
+    addWikiTreeIdToSegment: async (_, { segmentId, wikitreeId }) => {
+      const segment = await Segment.findById(segmentId);
+      if (!segment) {
+        throw new Error("Segment not found");
+      }
+      // Prevent adding duplicate wikitreeId
+      if (!segment.wikitreeIds.includes(wikitreeId)) {
+        segment.wikitreeIds.push(wikitreeId);
+        await segment.save();
+      }
+      return segment;
+    },
+
+    // Resolver to remove a wikitreeId from a segment
+    removeWikiTreeIdFromSegment: async (_, { segmentId, wikitreeId }) => {
+      const segment = await Segment.findById(segmentId);
+      if (!segment) {
+        throw new Error("Segment not found");
+      }
+      segment.wikitreeIds = segment.wikitreeIds.filter(
+        (id) => id !== wikitreeId
+      );
+      await segment.save();
+      return segment;
+    },
+
     // Segment mutations
     // Segment add
     addSegment: async (

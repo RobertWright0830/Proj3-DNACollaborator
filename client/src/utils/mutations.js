@@ -41,3 +41,21 @@ export const ADD_ANCESTOR_BY_WIKITREE_ID = gql`
     }
   }
 `;
+
+export const ADD_WIKITREEID_TO_SEGMENT = gql`
+  mutation AddWikiTreeIdToSegment($segmentId: ID!, $wikitreeId: String!) {
+    addWikiTreeIdToSegment(segmentId: $segmentId, wikitreeId: $wikitreeId) {
+      _id
+      wikitreeIds
+    }
+  }
+`;
+
+export const REMOVE_WIKITREEID_FROM_SEGMENT = gql`
+  mutation RemoveWikiTreeIdFromSegment($segmentId: ID!, $wikitreeId: String!) {
+    removeWikiTreeIdFromSegment(segmentId: $segmentId, wikitreeId: $wikitreeId) {
+      _id
+      wikitreeIds
+    }
+  }
+`;

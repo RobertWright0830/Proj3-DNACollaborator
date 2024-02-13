@@ -1,5 +1,6 @@
 const { Profile, Ancestor, Segment } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
+const axios = require("axios");
 
 const resolvers = {
   Query: {
@@ -91,7 +92,6 @@ const resolvers = {
       parent,
       {
         wikitreeId,
-        birthName,
         birthDate,
         deathDate,
         birthLocation,
@@ -102,7 +102,6 @@ const resolvers = {
     ) => {
       const newAncestor = await Ancestor.create({
         wikitreeId,
-        birthName,
         birthDate,
         deathDate,
         birthLocation,
@@ -118,7 +117,6 @@ const resolvers = {
       const {
         ancestorId,
         wikitreeId,
-        birthName,
         birthDate,
         deathDate,
         birthLocation,
@@ -131,7 +129,6 @@ const resolvers = {
         {
           $set: {
             wikitreeId,
-            birthName,
             birthDate,
             deathDate,
             birthLocation,
@@ -147,6 +144,42 @@ const resolvers = {
     removeAncestor: async (parent, { ancestorId }) => {
       return Ancestor.findOneAndDelete({ _id: ancestorId });
     },
+    // Add ancestor by wikitreeId
+    addAncestorByWikitreeId: async (_, { wikitreeId }) => {
+      try {
+        const response = await axios.get(
+          `https://api.wikitree.com/api.php?action=getProfile&key=${wikitreeId}&fields=Name,FirstName,MiddleName,LastNameAtBirth,BirthDate,DeathDate,BirthLocation,DeathLocation,Gender,Photo`
+        );
+        console.log("Response:", response); // Log the entire response
+        const ancestorData = response.data[0].profile;
+
+        console.log("Ancestor Data:", ancestorData); // Log the data from the response
+        const newAncestor = new Ancestor({
+          wikitreeId: ancestorData.Name,
+          firstName: ancestorData.FirstName,
+          middleName: ancestorData.MiddleName,
+          lastNameAtBirth: ancestorData.LastNameAtBirth,
+          birthDate: ancestorData.BirthDate,
+          deathDate: ancestorData.DeathDate,
+          birthLocation: ancestorData.BirthLocation,
+          deathLocation: ancestorData.DeathLocation,
+          sex: ancestorData.Gender,
+          wikitreePicUrl: ancestorData.Photo,
+        });
+
+        console.log("New Ancestor:", newAncestor); // Log the new ancestor object
+
+        const savedAncestor = await newAncestor.save(); // Save the new ancestor to the database
+        console.log("Saved Ancestor:", savedAncestor); // Log the saved ancestor
+        return savedAncestor;
+      }
+      catch (error) {
+        console.error(error);
+        throw new Error("Ancestor not found");
+      }
+    },
+     
+
 
     // Segment mutations
     // Segment add

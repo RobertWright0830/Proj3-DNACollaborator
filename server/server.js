@@ -18,7 +18,7 @@ const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 
 const PORT = process.env.PORT;
-const YOUR_DOMAIN = process.env.YOUR_DOMAIN;
+const YOUR_DOMAIN = process.env.VITE_STRIPE_API_URL;
 const app = express();
 const server = new ApolloServer({
   typeDefs,

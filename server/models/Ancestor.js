@@ -8,7 +8,13 @@ const ancestorSchema = new Schema(
       unique: true,
       trim: true,
     },
-    birthName: {
+    firstName: {
+      type: String,
+    },
+    middleName: {
+      type: String,
+    },
+    lastNameAtBirth: {
       type: String,
     },
     birthDate: {
@@ -29,7 +35,7 @@ const ancestorSchema = new Schema(
     wikitreePicUrl: {
       type: String,
     },
-    },
+  },
   {
     timestamps: true,
   }

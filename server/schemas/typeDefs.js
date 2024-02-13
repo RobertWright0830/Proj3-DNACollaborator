@@ -35,7 +35,9 @@ type Segment {
 type Ancestor {
   _id: ID!
   wikitreeId: String
-  birthName: String
+firstName: String
+middleName: String
+lastNameAtBirth: String
   birthDate: String
   deathDate: String
   birthLocation: String
@@ -71,11 +73,12 @@ type Mutation {
 
   #Ancestor mutations
     #Ancestor add
-  addAncestor(ancestorId: ID!, wikitreeId: String!, birthName: String, birthDate: String, deathDate: String, birthLocation: String, deathLocation: String, sex: String, wikitreePicUrl: String): Ancestor
+  addAncestor(ancestorId: ID!, wikitreeId: String!, firstName: String, middleName: String, lastNameAtBirth: String, birthDate: String, deathDate: String, birthLocation: String, deathLocation: String, sex: String, wikitreePicUrl: String): Ancestor
     #Ancestor update
-  updateAncestor(ancestorId: ID!, wikitreeId: String, birthName: String, birthDate: String, deathDate: String, birthLocation: String, deathLocation: String, sex: String, wikitreePicUrl: String): Ancestor
+  updateAncestor(ancestorId: ID!, wikitreeId: String, firstName: String, middleName: String, lastNameAtBirth: String, birthDate: String, deathDate: String, birthLocation: String, deathLocation: String, sex: String, wikitreePicUrl: String): Ancestor
     #Ancestor remove
   removeAncestor(ancestorId: ID!): Ancestor
+  addAncestorByWikitreeId(wikitreeId: String!): Ancestor
 
   #Segment mutations
     #Segment add

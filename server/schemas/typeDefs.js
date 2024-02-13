@@ -29,6 +29,7 @@ type Segment {
   segmentCm: Float
   snp: Int
   wikitreeIds: [String]
+  profile: Profile!
 }
 
 type Ancestor {
@@ -47,6 +48,7 @@ type Ancestor {
 type Query {
   profiles: [Profile]!
   profile(profileId: ID!): Profile
+  me: Profile
   segments: [Segment]!
   segment(segmentId: ID!): Segment
   segmentsByWikitreeId(wikitreeId: String!): [Segment]
@@ -77,7 +79,7 @@ type Mutation {
 
   #Segment mutations
     #Segment add
-  addSegment(testerId: String!, matchId: String!, matchName: String, matchEmail: String, sex: String, chromosome: String!, start: Int!, end: Int!, segmentCm: Float, snp: Int): Segment
+  addSegment(profileId: ID!, testerId: String!, matchId: String!, matchName: String, matchEmail: String, sex: String, chromosome: String!, start: Int!, end: Int!, segmentCm: Float, snp: Int): Segment
     #Segment update
   updateSegment(segmentId: ID!, testerId: String, matchId: String, matchName: String, matchEmail: String, sex: String, chromosome: String, start: Int, end: Int, segmentCm: Float, snp: Int): Segment
     #Segment remove

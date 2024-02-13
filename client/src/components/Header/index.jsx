@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import Auth from "../../utils/auth";
 
 const Header = () => {
@@ -7,6 +6,12 @@ const Header = () => {
     event.preventDefault();
     Auth.logout();
   };
+
+  let profileId;
+  if (Auth.loggedIn()) {
+    profileId = Auth.getProfile().data._id;
+  }
+  
   return (
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark custom-navbar-justify-content">
       <div className="container custom-navbar-margin">
@@ -30,15 +35,16 @@ const Header = () => {
                 Contact Us
               </a>
             </li>
-            <li>
-              <Link to="/analysis" className="nav-link">
-                Analyze
-              </Link>
-            </li>
+
             {Auth.loggedIn() ? (
-              <button className="btn btn-lg btn-light m-2" onClick={logout}>
-                Logout
-              </button>
+              <>
+                <li>
+                    <Link to={`/profiles/${profileId}`} className="nav-link">My Dashboard</Link>
+                </li>
+                <button className="btn btn-lg btn-light m-2" onClick={logout}>
+                  Logout
+                </button>
+              </>
             ) : (
               <>
                 <Link className="nav-link" to="/login">

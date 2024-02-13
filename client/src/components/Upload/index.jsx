@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { CurrentTable } from "../components/Table/CurrentTable";
+import {useState, useContext } from "react";
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
 const UPLOAD_URL = import.meta.env.VITE_APP_UPLOAD_URL;
@@ -53,16 +52,14 @@ function Upload() {
       >
         <div>
           <label>Select file to upload:</label>
-          <input type="file" id="fileinput" name="file" />
+          <br />
+          <input className="checkbox" type="file" id="fileinput" name="file" />
           <button className="btn btn-secondary" type="submit">
             Upload
           </button>
         </div>
       </form>
       {uploadSuccess && <div>{uploadSuccess}</div>} <br />
-      <h3>Chromosome Segment Table</h3>
-      <p>Sort in ascending or descending order by selecting the header.</p>
-      <CurrentTable />
     </div>
   );
 }

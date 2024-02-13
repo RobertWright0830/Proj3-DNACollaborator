@@ -1,12 +1,12 @@
-const express = require('express'); //x
+const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const csv = require('csvtojson');
-require('dotenv').config(); //x
-const { ApolloServer } = require('@apollo/server');  //x
+require('dotenv').config();
+const { ApolloServer } = require('@apollo/server');
 const {expressMiddleware} = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
@@ -14,12 +14,12 @@ const segment = require('./models/Segment');
 const upload = multer({ dest: 'uploads/' });
 
 
-const {typeDefs, resolvers} = require('./schemas'); //x
+const {typeDefs, resolvers} = require('./schemas');
 const db = require('./config/connection');
 
-const PORT = process.env.PORT; //x
-const app = express(); //x
-const server = new ApolloServer({ //x
+const PORT = process.env.PORT;
+const app = express();
+const server = new ApolloServer({
     typeDefs,
     resolvers,
 });
@@ -49,6 +49,7 @@ const startApolloServer = async () => {
         matchName: item["MatchedName"],
         sex: item["Matched Sex"],
         matchEmail: item["MatchedEmail"],
+        profile: req.user.profileId,
       }));
       console.log("Mapped data for MongoDB:", chromosomeInfo);
 
@@ -75,7 +76,6 @@ const startApolloServer = async () => {
   app.use(
     "/graphql",
     expressMiddleware(server, {
-      //x
       context: authMiddleware,
     })
   );
@@ -91,7 +91,6 @@ const startApolloServer = async () => {
 
   db.once("open", () => {
     app.listen(PORT, () => {
-      //x
       console.log(`API server running on port ${PORT} !`);
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });

@@ -1,35 +1,31 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 import { useMutation } from "@apollo/client";
 import { ADD_PROFILE } from "../utils/mutations";
-
 import Auth from "../utils/auth";
-
-
 
 const Signup = () => {
 
-  const navigate = useNavigate();
-
+  // Hooks and state management
+  const navigate = useNavigate(); // navigate to the homepage after successful signup
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
   const [errorMessages, setErrorMessages] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
   const [addProfile, { error, data }] = useMutation(ADD_PROFILE);
 
-  // update state based on form input changes
+
+  // Event handlers and logic
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -45,9 +41,10 @@ const Signup = () => {
     });
   };
 
+ // Validate form
   const validateForm = () => {
     let isValid = true;
-    let errors = { username: "", email: "", password: "", confirmPassword: "" };
+    let errors = { username: "", email: ""};
 
     // Validate password match
     if (formState.password !== formState.confirmPassword) {
@@ -62,25 +59,32 @@ const Signup = () => {
     }
 
     setErrorMessages(errors);
+
     return isValid;
   };
 
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
+    // console.log(formState) // only use for testing/debugging; exposes password in console
 
+    // form validation failed
     if (!validateForm()) {
       console.log("Form validation failed");
       return;
     }
 
+    // form validation passed
     try {
+      
+      // mutation request to add a new profile
       const { data } = await addProfile({
         variables: { ...formState },
       });
 
+      // login the new user
       Auth.login(data.addProfile.token);
+      // redirect to the homepage
       navigate("/");
     } catch (e) {
       console.error(e);

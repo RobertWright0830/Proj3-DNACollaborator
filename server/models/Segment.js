@@ -79,6 +79,11 @@ const segmentSchema = new Schema(
       type: Number,
       required: false,
     },
+    profile: {
+      type: Schema.Types.ObjectId,
+      Ref: "Profile",
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -9,7 +9,10 @@ export default function ErrorPage() {
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p>
-        <i>{error.statusText || error.message}</i>
+        <small>
+          Please try refreshing the page, or{" "}
+          <a href="/">return to the homepage</a>.
+        </small>
       </p>
     </div>
   );

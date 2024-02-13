@@ -16,7 +16,7 @@ import { ColumnFilter } from "./ColumnFilter";
 
 const GET_SEGMENTS = gql`
   query GetSegments {
-    segments {
+      segments {
       testerId
       matchId
       matchName
@@ -31,7 +31,7 @@ const GET_SEGMENTS = gql`
   }
 `;
 
-export const CurrentTable = () => {
+const CurrentTable = () => {
   const columns = useMemo(() => COLUMNS, []);
   const { loading, error, data } = useQuery(GET_SEGMENTS);
   const tableData = useMemo(
@@ -81,12 +81,20 @@ export const CurrentTable = () => {
             id: "selection",
             Header: ({ getToggleAllRowsSelectedProps }) => (
               <div>
-                <input type="checkbox" {...getToggleAllRowsSelectedProps()} />
+                <input
+                  className="checkbox"
+                  type="checkbox"
+                  {...getToggleAllRowsSelectedProps()}
+                />
               </div>
             ),
             Cell: ({ row }) => (
               <div>
-                <input type="checkbox" {...row.getToggleRowSelectedProps()} />
+                <input
+                  className="checkbox"
+                   type="checkbox"
+                  {...row.getToggleRowSelectedProps()}
+                />
               </div>
             ),
           },
@@ -103,7 +111,7 @@ export const CurrentTable = () => {
 
   return (
     <>
-      <div className="row">
+      <div className="row checkbox">
         <div>
           <Checkbox {...getToggleHideAllColumnsProps()} /> Toggle All
         </div>
@@ -204,3 +212,5 @@ export const CurrentTable = () => {
     </>
   );
 };
+
+export default CurrentTable;

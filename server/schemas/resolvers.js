@@ -11,11 +11,13 @@ const resolvers = {
     profile: async (parent, { profileId }) => {
       return Profile.findOne({ _id: profileId });
     },
-    // me: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return Profile.findOne({ _id: context.user._id });
-    //   }
-    //   throw AuthenticationError;
+
+    me: async (parent, { profileId }) => {
+      if (context.user) {
+        return Profile.findOne({ _id: context.user._id });
+      }
+      throw AuthenticationError;
+    },
 
     // Ancestor queries
     ancestors: async () => {
@@ -77,8 +79,11 @@ const resolvers = {
       return Profile.findOneAndUpdate({ _id: profileId }, input, { new: true });
     },
     // Profile remove
-    removeProfile: async (parent, { profileId }) => {
-      return Profile.findOneAndDelete({ _id: profileId });
+    removeProfile: async (parent, args, context) => {
+      if (context.user) {
+        return Profile.findOneAndDelete({ _id: context.user._id });
+      }
+      throw AuthenticationError;
     },
     // Ancestor mutations
     // Ancestor add

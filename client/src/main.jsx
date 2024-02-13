@@ -1,7 +1,7 @@
-console.log("App initialization - main.jsx");
-console.log("API URL:", import.meta.env.VITE_APP_API_URL);
-console.log("API URL:", import.meta.env.VITE_APP_UPLOAD_URL);
-console.log("API URL:", import.meta.env.VITE_GRAPHQL_API_URL);
+// console.log("App initialization - main.jsx");
+// console.log("API URL:", import.meta.env.VITE_APP_API_URL);
+// console.log("API URL:", import.meta.env.VITE_APP_UPLOAD_URL);
+// console.log("API URL:", import.meta.env.VITE_GRAPHQL_API_URL);
 
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom/dist";
@@ -13,7 +13,9 @@ import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
-import Analysis from "./pages/Analysis";
+// import Analysis from "./pages/Analysis";
+// import Analysis_Test from "./pages/Analysis_Test";
+
 
 const router = createBrowserRouter([
   {
@@ -42,9 +44,9 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/analysis",
-        element: <Analysis />,
-      },
+        path: "/*",
+        element: <Error />,
+      }
     ],
   },
 ]);

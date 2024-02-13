@@ -2,7 +2,20 @@
     color: white;
 }
 
-
+.donate-button {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 0.25rem;
+}
+.donate-button:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+.donate-button:focus, .donate-button.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
 
 i {
     background-color: white;

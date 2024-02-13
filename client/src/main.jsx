@@ -13,8 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
-// import Analysis from "./pages/Analysis";
-// import Analysis_Test from "./pages/Analysis_Test";
+import DonatePage from "./pages/DonatePage";
 
 
 const router = createBrowserRouter([
@@ -42,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/profiles/:profileId",
         element: <Dashboard />,
+      },
+      {
+        path: "/donate",
+        element: <DonatePage />,
       },
       {
         path: "/*",

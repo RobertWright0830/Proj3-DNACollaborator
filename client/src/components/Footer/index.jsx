@@ -1,8 +1,7 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+
   return (
     <div>
       <footer className="text-center text-white bg-secondary">
@@ -35,9 +34,9 @@ const Footer = () => {
               {/* <!-- Grid column --> */}
               <div className="col-md-2">
                 <h6 className="text-uppercase font-weight-bold">
-                  <a href="#!" className="text-white">
+                  <Link to="/donate" className="text-white">
                     Donate
-                  </a>
+                  </Link>
                 </h6>
               </div>
               {/* <!-- Grid column --> */}
@@ -73,14 +72,14 @@ const Footer = () => {
             <div className="row d-flex justify-content-center">
               <div className="col-lg-8">
                 <p>
-                  "Our mission is to make
-                  genealogy accessible to everyone, free of charge. If you've
-                  found value in our tool and wish to help us keep the history
-                  alive for future generations, consider making a donation. Your
-                  support enables us to maintain and improve this platform,
-                  ensuring that exploring your roots remains a journey open to
-                  all. Every contribution, no matter the size, makes a
-                  significant difference. Thank you for your support."
+                  "Our mission is to make genealogy accessible to everyone, free
+                  of charge. If you've found value in our tool and wish to help
+                  us keep the history alive for future generations, consider
+                  making a donation. Your support enables us to maintain and
+                  improve this platform, ensuring that exploring your roots
+                  remains a journey open to all. Every contribution, no matter
+                  the size, makes a significant difference. Thank you for your
+                  support."
                 </p>
               </div>
             </div>

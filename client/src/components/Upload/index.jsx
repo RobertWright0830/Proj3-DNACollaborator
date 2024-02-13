@@ -1,14 +1,14 @@
-import {useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import Auth from "../../utils/auth";
 
-const API_URL = import.meta.env.VITE_APP_API_URL;
 const UPLOAD_URL = import.meta.env.VITE_APP_UPLOAD_URL;
 
 function Upload() {
-  // State to store the fetched data
+// State to store the fetched data
   const [uploadSuccess, setUploadSuccess] = useState("");
+  const inputRef = useRef(null);
 
-  // Handle form submission
+// Handle form submission
   const addCSV = (e) => {
     e.preventDefault();
     if (!Auth.loggedIn()) {
@@ -17,18 +17,17 @@ function Upload() {
     }
 
     const profileId = Auth.getProfile().data._id;
-    const input = document.getElementById("fileinput");
-    console.log(input.files[0]);
+    const input = inputRef.current.files[0];
+    console.log(input);
     var formData = new FormData();
-    formData.append("file", input.files[0]);
+    formData.append("file", input);
     formData.append("profileId", profileId);
 
     console.log("Attempting to upload file with profileId:", profileId);
-    console.log("File to upload:", input.files[0]);
+    console.log("File to upload:", input);
 
     console.log("Sending request to:", UPLOAD_URL);
     console.log("FormData includes profileId:", formData.has("profileId"));
-
 
     fetch(`${UPLOAD_URL}`, {
       method: "POST",
@@ -36,8 +35,7 @@ function Upload() {
       credentials: "include",
     })
       .then((response) => {
-
-         console.log(`Response status: ${response.status}`, response);
+        console.log(`Response status: ${response.status}`, response);
         if (!response.ok) {
           throw new Error(
             `Network response was not ok: ${response.statusText}`
@@ -51,9 +49,10 @@ function Upload() {
         }
       })
       .then((data) => {
-          console.log("Upload successful, server response:", data);
+        console.log("Upload successful, server response:", data);
         console.log(data);
         setUploadSuccess("CSV uploaded successfully");
+        inputRef.current.value = null;
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -67,7 +66,6 @@ function Upload() {
     console.log("User is logged in, proceeding with upload.");
   }
 
-
   return (
     <div className="container">
       <form
@@ -79,7 +77,13 @@ function Upload() {
         <div>
           <label>Select file to upload:</label>
           <br />
-          <input className="checkbox" type="file" id="fileinput" name="file" />
+          <input
+            className="checkbox"
+            type="file"
+            id="fileinput"
+            name="file"
+            ref={inputRef}
+          />
           <button className="btn btn-secondary" type="submit">
             Upload
           </button>

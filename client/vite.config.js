@@ -13,6 +13,10 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      "/create-checkout-session": {
+        target: "http://localhost:4242",
+        changeOrigin: true,
+      },
     },
   },
 });

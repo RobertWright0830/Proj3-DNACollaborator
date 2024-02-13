@@ -12,11 +12,13 @@ const path = require("path");
 const { authMiddleware } = require("./utils/auth");
 const segment = require("./models/Segment");
 const upload = multer({ dest: "uploads/" });
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 
 const PORT = process.env.PORT;
+const YOUR_DOMAIN = "http://localhost:4242";
 const app = express();
 const server = new ApolloServer({
   typeDefs,
@@ -44,7 +46,7 @@ app.use(cors(corsOptions));
     } else {
       console.log("User not authenticated");
 
-    const profileId = req.user?.profileId;
+      const profileId = req.user?.profileId;
       console.log("Extracted Profile ID:", profileId);
     }
 
@@ -89,6 +91,28 @@ app.use(cors(corsOptions));
     }
   });
 
+  app.post("/create-checkout-session", async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: "price_1OjFLMEHAN1uW3wvhWw5145x",
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+       success_url: `${YOUR_DOMAIN}?success=true`,
+    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      automatic_tax: {
+        enabled: true,
+      },
+    });
+
+    res.redirect(303, session.url);
+  });
+
+  app.listen(4242, () => console.log("Running on port 4242"));
+
+ 
   app.use(
     "/graphql",
     expressMiddleware(server, {

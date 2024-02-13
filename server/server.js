@@ -1,42 +1,58 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const multer = require('multer');
-const csv = require('csvtojson');
-require('dotenv').config();
-const { ApolloServer } = require('@apollo/server');
-const {expressMiddleware} = require('@apollo/server/express4');
-const path = require('path');
-const { authMiddleware } = require('./utils/auth');
-const segment = require('./models/Segment');
-const upload = multer({ dest: 'uploads/' });
+const express = require("express");
+const bodyParser = require("body-parser");
+const fs = require("fs");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const multer = require("multer");
+const csv = require("csvtojson");
+require("dotenv").config();
+const { ApolloServer } = require("@apollo/server");
+const { expressMiddleware } = require("@apollo/server/express4");
+const path = require("path");
+const { authMiddleware } = require("./utils/auth");
+const segment = require("./models/Segment");
+const upload = multer({ dest: "uploads/" });
 
-
-const {typeDefs, resolvers} = require('./schemas');
-const db = require('./config/connection');
+const { typeDefs, resolvers } = require("./schemas");
+const db = require("./config/connection");
 
 const PORT = process.env.PORT;
 const app = express();
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+  typeDefs,
+  resolvers,
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();
 
-  app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000", // Allow this origin to make requests
+  credentials: true, // Allow credentials for cross-origin requests
+};
+
+app.use(cors(corsOptions));
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
   app.post("/upload", upload.single("file"), async (req, res) => {
+    console.log("upload endpoint hit");
+
+    if (req.user) {
+      console.log("User authenticated:", req.user);
+    } else {
+      console.log("User not authenticated");
+
+    const profileId = req.user?.profileId;
+      console.log("Extracted Profile ID:", profileId);
+    }
+
     try {
       console.log("Received file:", req.file.path);
       const jsonObj = await csv().fromFile(req.file.path);
       console.log("Parsed CSV:", jsonObj);
+      const profileId = req.body.profileId;
 
       const chromosomeInfo = jsonObj.map((item) => ({
         testerId: item["PrimaryKit"],
@@ -49,7 +65,7 @@ const startApolloServer = async () => {
         matchName: item["MatchedName"],
         sex: item["Matched Sex"],
         matchEmail: item["MatchedEmail"],
-        profile: req.user.profileId,
+        profile: new mongoose.Types.ObjectId(profileId),
       }));
       console.log("Mapped data for MongoDB:", chromosomeInfo);
 
@@ -72,7 +88,7 @@ const startApolloServer = async () => {
       });
     }
   });
-  
+
   app.use(
     "/graphql",
     expressMiddleware(server, {
@@ -95,6 +111,6 @@ const startApolloServer = async () => {
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });
   });
-}
+};
 
-  startApolloServer();
+startApolloServer();

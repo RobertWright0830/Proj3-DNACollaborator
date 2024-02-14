@@ -1,3 +1,4 @@
+// Load necessary modules and initialize environment variables
 const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
@@ -19,7 +20,9 @@ const db = require("./config/connection");
 
 const PORT = process.env.PORT;
 const YOUR_DOMAIN = process.env.VITE_STRIPE_API_URL;
+// Initialize Express app
 const app = express();
+// Configure Apollo Server with GraphQL schema
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -29,31 +32,35 @@ const server = new ApolloServer({
 const startApolloServer = async () => {
   await server.start();
 
-const corsOptions = {
-  origin: "http://localhost:3000", // Allow this origin to make requests
-  credentials: true, // Allow credentials for cross-origin requests
-};
+  const corsOptions = {
+    origin: "http://localhost:3000", // Allow this origin to make requests
+    credentials: true, // Allow credentials for cross-origin requests
+  };
 
-app.use(cors(corsOptions));
+  // Enable CORS with specified options for cross-origin requests
+  app.use(cors(corsOptions));
+  // Parse requests of content-type - application/x-www-form-urlencoded
   app.use(express.urlencoded({ extended: false }));
+  // Parse requests of content-type - application/json
   app.use(express.json());
 
+  // Handle file upload and process CSV data
   app.post("/upload", upload.single("file"), async (req, res) => {
-    console.log("upload endpoint hit");
+    // console.log("upload endpoint hit");
 
-    if (req.user) {
-      console.log("User authenticated:", req.user);
-    } else {
-      console.log("User not authenticated");
+    // if (req.user) {
+    //   console.log("User authenticated:", req.user);
+    // } else {
+    //   console.log("User not authenticated");
 
       const profileId = req.user?.profileId;
-      console.log("Extracted Profile ID:", profileId);
-    }
+      // console.log("Extracted Profile ID:", profileId);
+
 
     try {
-      console.log("Received file:", req.file.path);
+      // console.log("Received file:", req.file.path);
       const jsonObj = await csv().fromFile(req.file.path);
-      console.log("Parsed CSV:", jsonObj);
+      // console.log("Parsed CSV:", jsonObj);
       const profileId = req.body.profileId;
 
       const chromosomeInfo = jsonObj.map((item) => ({
@@ -69,10 +76,10 @@ app.use(cors(corsOptions));
         matchEmail: item["MatchedEmail"],
         profile: new mongoose.Types.ObjectId(profileId),
       }));
-      console.log("Mapped data for MongoDB:", chromosomeInfo);
+      // console.log("Mapped data for MongoDB:", chromosomeInfo);
 
       await segment.insertMany(chromosomeInfo);
-      console.log("Data inserted into MongoDB");
+      // console.log("Data inserted into MongoDB");
 
       res.status(200).send({
         message: "Data uploaded successfully",
@@ -91,6 +98,7 @@ app.use(cors(corsOptions));
     }
   });
 
+  // Create Stripe checkout session and redirect to payment
   app.post("/create-checkout-session", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -100,8 +108,8 @@ app.use(cors(corsOptions));
         },
       ],
       mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      success_url: `${YOUR_DOMAIN}?success=true`,
+      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
       automatic_tax: {
         enabled: true,
       },
@@ -110,9 +118,9 @@ app.use(cors(corsOptions));
     res.redirect(303, session.url);
   });
 
+  // Start the Express server
   app.listen(4242, () => console.log("Running on port 4242"));
 
- 
   app.use(
     "/graphql",
     expressMiddleware(server, {
@@ -129,6 +137,7 @@ app.use(cors(corsOptions));
     });
   }
 
+  // Connect to the database and notify on successful connection
   db.once("open", () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT} !`);

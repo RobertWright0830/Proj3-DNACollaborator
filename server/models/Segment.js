@@ -1,9 +1,12 @@
+// Import mongoose to define a model with schema for storing genetic segment data
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
+// Define schema for Segment including tester and match details, genetic information, and related profile
 const segmentSchema = new Schema(
   {
+    // Fields include identifiers for tester and match, genetic segment details (chromosome, start, end, segmentCm, snp), and associated profile
+    // Optional fields for additional match information and genetic data flexibility
     testerId: {
       type: String,
       required: true,
@@ -85,11 +88,12 @@ const segmentSchema = new Schema(
       required: false,
     },
   },
+  // Enable automatic creation of createdAt and updatedAt timestamps for tracking data changes
   { timestamps: true }
 );
 
 const Segment =
-  mongoose.models.Segment ||
-  mongoose.model("Segment", segmentSchema);
-
+  mongoose.models.Segment || mongoose.model("Segment", segmentSchema);
+  
+// Create or retrieve the Segment model to avoid recompilation errors; export for database operations
 module.exports = Segment;

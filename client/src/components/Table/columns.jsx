@@ -43,7 +43,6 @@ export const COLUMNS = [
     accessor: "start",
     filter: customNumberFilter,
     Cell: ({ value }) => {
-      // Use Intl.NumberFormat to format the cell value
       return new Intl.NumberFormat("en-US", {
         maximumFractionDigits: 0,
       }).format(value);
@@ -54,7 +53,6 @@ export const COLUMNS = [
     accessor: "end",
     filter: customNumberFilter,
     Cell: ({ value }) => {
-      // Use Intl.NumberFormat to format the cell value
       return new Intl.NumberFormat("en-US", {
         maximumFractionDigits: 0,
       }).format(value);

@@ -158,10 +158,10 @@ const resolvers = {
         const response = await axios.get(
           `https://api.wikitree.com/api.php?action=getProfile&key=${wikitreeId}&fields=Name,FirstName,MiddleName,LastNameAtBirth,BirthDate,DeathDate,BirthLocation,DeathLocation,Gender,Photo`
         );
-        console.log("Response:", response); // Log the entire response
+        // console.log("Response:", response); // Log the entire response
         const ancestorData = response.data[0].profile;
 
-        console.log("Ancestor Data:", ancestorData); // Log the data from the response
+        // console.log("Ancestor Data:", ancestorData); // Log the data from the response
 
         // Determine the default image based on gender
         const defaultImageUrl =
@@ -182,10 +182,10 @@ const resolvers = {
           wikitreePicUrl: ancestorData.PhotoData?.path ?? defaultImageUrl,
         });
 
-        console.log("New Ancestor:", newAncestor); // Log the new ancestor object
+        // console.log("New Ancestor:", newAncestor); // Log the new ancestor object
 
         const savedAncestor = await newAncestor.save(); // Save the new ancestor to the database
-        console.log("Saved Ancestor:", savedAncestor); // Log the saved ancestor
+        // console.log("Saved Ancestor:", savedAncestor); // Log the saved ancestor
         return savedAncestor;
       } catch (error) {
         console.error(error);
@@ -224,7 +224,7 @@ const resolvers = {
     // Segment add
     addSegment: async (
       parent,
-      { testerId, matchId, chromosome, start, end /* other fields */ }
+      { testerId, matchId, chromosome, start, end }
     ) => {
       const newSegment = await Segment.create({
         testerId,
@@ -232,7 +232,6 @@ const resolvers = {
         chromosome,
         start,
         end,
-        // include other fields as needed
       });
       return newSegment;
     },

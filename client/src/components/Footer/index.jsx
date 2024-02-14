@@ -1,17 +1,18 @@
+// Import Link from react-router-dom for internal navigation
 import { Link } from "react-router-dom";
 
+// Component for rendering the footer section with navigation links, social media icons, and copyright information
 const Footer = () => {
-
+  // Main container for the footer content
   return (
     <div>
       <footer className="text-center text-white bg-secondary">
-        {/* <!-- Grid container --> */}
         <div className="container">
-          {/* <!-- Section: Links --> */}
+          {/*
+            Section for navigation links including about us, blogs, donate, FAQ, and contact us
+          */}
           <section className="mt-5">
-            {/* <!-- Grid row--> */}
             <div className="row text-center d-flex justify-content-center pt-5">
-              {/* <!-- Grid column --> */}
               <div className="col-md-2">
                 <h6 className="text-uppercase font-weight-bold">
                   <a href="#!" className="text-white">
@@ -19,9 +20,7 @@ const Footer = () => {
                   </a>
                 </h6>
               </div>
-              {/* <!-- Grid column --> */}
 
-              {/* <!-- Grid column --> */}
               <div className="col-md-2">
                 <h6 className="text-uppercase font-weight-bold">
                   <a href="#!" className="text-white">
@@ -29,19 +28,16 @@ const Footer = () => {
                   </a>
                 </h6>
               </div>
-              {/* <!-- Grid column --> */}
 
-              {/* <!-- Grid column --> */}
               <div className="col-md-2">
                 <h6 className="text-uppercase font-weight-bold">
+                  {/* Use Link component for internal navigation to maintain SPA behavior */}
                   <Link to="/donate" className="text-white">
                     Donate
                   </Link>
                 </h6>
               </div>
-              {/* <!-- Grid column --> */}
 
-              {/* <!-- Grid column --> */}
               <div className="col-md-2">
                 <h6 className="text-uppercase font-weight-bold">
                   <a href="#!" className="text-white">
@@ -49,9 +45,7 @@ const Footer = () => {
                   </a>
                 </h6>
               </div>
-              {/* <!-- Grid column --> */}
 
-              {/* <!-- Grid column --> */}
               <div className="col-md-2">
                 <h6 className="text-uppercase font-weight-bold">
                   <a href="#!" className="text-white">
@@ -59,15 +53,10 @@ const Footer = () => {
                   </a>
                 </h6>
               </div>
-              {/* <!-- Grid column --> */}
             </div>
-            {/* <!-- Grid row--> */}
           </section>
-          {/* <!-- Section: Links --> */}
-
           <hr className="my-1" />
-
-          {/* <!-- Section: Text --> */}
+          {/* Section for displaying the mission statement or a brief about the organization's purpose */}
           <section className="mb-1">
             <div className="row d-flex justify-content-center">
               <div className="col-lg-8">
@@ -84,9 +73,7 @@ const Footer = () => {
               </div>
             </div>
           </section>
-          {/* <!-- Section: Text --> */}
-
-          {/* <!-- Section: Social --> */}
+          {/* Section for social media icons linking to external social platforms */}
           <section className="text-center mb-1">
             <a href="" className="text-white me-4">
               <i className="fab fa-facebook-f"></i>
@@ -107,18 +94,18 @@ const Footer = () => {
               <i className="fab fa-github"></i>
             </a>
           </section>
-          {/* <!-- Section: Social --> */}
         </div>
-        {/* <!-- Grid container --> */}
-
-        {/* <!-- Copyright --> */}
+        Display copyright information with a link to the organization's main
+        website
         <div className="text-center p-3">
           © 2024 Copyright:
-          <a className="text-white" href="https://mdbootstrap.com/">
+          <a
+            className="text-white"
+            href="https://proj3-dnacollaborator.onrender.com"
+          >
             DNACollaborator.com
           </a>
         </div>
-        {/* <!-- Copyright --> */}
       </footer>
     </div>
   );

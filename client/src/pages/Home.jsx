@@ -5,7 +5,6 @@ import Auth from "../utils/auth";
 const Home = () => {
   return (
     <main>
-      {/* showcase */}
       <section className="bg-dark text-light p-5 text-center text-sm-start">
         <div className="body">
           <div className="d-sm-flex align-items-top justify-content-between">
@@ -48,7 +47,6 @@ const Home = () => {
               src="/EdmundHallPuzzlePiecesNoMovement.jpg"
               alt="Ancestor Puzzle Pieces"
             />
-            {/* doesn't seem like it is disappearing on small screens */}
           </div>
         </div>
       </section>

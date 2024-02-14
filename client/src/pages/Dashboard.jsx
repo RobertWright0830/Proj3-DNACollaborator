@@ -28,13 +28,12 @@ const Dashboard = () => {
   const profile = data?.me || data?.profile || {};
   console.log("profile:", profile); // Log the profile
 
-  // Use React Router's `<Redirect />` component to redirect to personal profile page if username is yours
   if (!Auth.loggedIn() || Auth.getProfile().data._id !== profileId) {
     return <Navigate to="/login" />;
   }
 
   if (loading) {
-    console.log("Loading..."); // Log the loading state visually in the UI for better user experience
+    console.log("Loading...");
     return <div>Loading...</div>;
   }
 

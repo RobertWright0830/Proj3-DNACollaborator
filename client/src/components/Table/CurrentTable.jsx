@@ -194,14 +194,14 @@ const CurrentTable = ({ onSelectionChange }) => {
         <button
           onClick={() => previousPage()}
           disabled={!canPreviousPage}
-          className={!canPreviousPage ? "btn-disabled" : "btn-enabled"} // Apply classes based on state
+          className={!canPreviousPage ? "btn-disabled" : "btn-enabled"} 
         >
           Previous
         </button>
         <button
           onClick={() => nextPage()}
           disabled={!canNextPage}
-          className={!canNextPage ? "btn-disabled" : "btn-enabled"} // Apply classes based on state
+          className={!canNextPage ? "btn-disabled" : "btn-enabled"} 
         >
           Next
         </button>

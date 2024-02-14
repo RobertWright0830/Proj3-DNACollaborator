@@ -23,11 +23,11 @@ function Upload() {
     formData.append("file", input);
     formData.append("profileId", profileId);
 
-    console.log("Attempting to upload file with profileId:", profileId);
-    console.log("File to upload:", input);
+    // console.log("Attempting to upload file with profileId:", profileId);
+    // console.log("File to upload:", input);
 
-    console.log("Sending request to:", UPLOAD_URL);
-    console.log("FormData includes profileId:", formData.has("profileId"));
+    // console.log("Sending request to:", UPLOAD_URL);
+    // console.log("FormData includes profileId:", formData.has("profileId"));
 
     fetch(`${UPLOAD_URL}`, {
       method: "POST",

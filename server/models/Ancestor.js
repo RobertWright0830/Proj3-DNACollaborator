@@ -1,6 +1,9 @@
+// Import Schema and model from Mongoose to define data structure and create model
 const { Schema, model } = require("mongoose");
 
+// Define schema for Ancestor with structure and field validation rules
 const ancestorSchema = new Schema(
+  // Ancestor model fields including identifiers, names, dates, locations, and additional metadata
   {
     wikitreeId: {
       type: String,
@@ -37,10 +40,11 @@ const ancestorSchema = new Schema(
     },
   },
   {
+    // Enable automatic creation of createdAt and updatedAt fields
     timestamps: true,
   }
 );
 
 const Ancestor = model("Ancestor", ancestorSchema);
-
+// Export Ancestor model for use in database operations
 module.exports = Ancestor;
